@@ -14,7 +14,11 @@
                         </div>
                     @endif
                     {{$user->name}}
-                    <button type="button" class="btn btn-primary">Following</button>
+                    <form action="/following" method="post">
+                    {{ csrf_field() }}
+                    <input type="text" name="following_user" value="{{$user->id}}" hidden>
+                        <button type="submit" class="btn btn-primary">Following</button>
+                    </form> 
                 </div>
             </div>
         </div>

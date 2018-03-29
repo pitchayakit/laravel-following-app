@@ -24,7 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->get();
+
+        $users = DB::table('users')
+            ->join('following', 'users.id', '=', 'following.user_id')
+            ->get();
 
         return view('home', ['users' => $users]);
     }
