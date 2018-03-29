@@ -13,14 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
-                    
-                    <ul>
-                    @foreach ($users as $user)
-                        <li>{{$user->name}}</li>
-                    @endforeach
-                    </ul>
+                    {{$user->name}}
+                    <button type="button" class="btn btn-primary">Following</button>
                 </div>
             </div>
         </div>
