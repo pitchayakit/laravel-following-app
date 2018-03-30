@@ -17,7 +17,8 @@ class FollowingTrckers extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('following_id');
+            $table->integer('following_id')->unsigned()->index()->nullable();
+            $table->foreign('following_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
