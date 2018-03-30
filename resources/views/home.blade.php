@@ -14,11 +14,11 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    Your friends
                     
                     <ul>
                     @foreach ($users as $user)
-                        <li>{{$user->id}}</li>
+                        <li>{{$user->name}}</li>
                     @endforeach
                     </ul>
                 </div>
