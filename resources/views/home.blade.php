@@ -6,20 +6,17 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    Your friends
-                    
+                    <h4>Your friends</h4>  
                     <ul>
-                    @foreach ($users as $user)
-                        <li>{{$user->name}}</li>
-                    @endforeach
+                        @foreach ($users as $user)
+                            <li><a href="/user/{{$user->id}}">{{$user->name}}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
