@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    public function followingTracker()
+    public function followingUser()
     {
-        return $this->hasMany('App\Model\FollowingTracker');
+        return $this->hasMany('App\Model\FollowingUser');
     }
 }

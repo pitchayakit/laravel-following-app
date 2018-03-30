@@ -24,8 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $following_users = \App\Model\User::find(1)->followingTracker;
-        print_r($following_users);
+        $following_users_id = \App\Model\User::find(1)->followingTracker;
+        //print_r($following_users);
+        $following_users_name = \App\Model\FollowingUser::find(2)->user->name;
+        print_r($following_users_name);
 
         $users = DB::table('users')
             //->join('following', 'users.id', '=', 'following.user_id')
