@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function followingTracker()
     {
-        return $this->hasMany('App\FollowingTracker');
+        return $this->hasMany('App\Model\FollowingTracker');
     }
 }
