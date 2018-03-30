@@ -29,7 +29,7 @@ class HomeController extends Controller
         
         $users = DB::table('following_users')
             ->join('users', 'users.id', '=', 'following_users.following_id')
-            //->where('user_id', $current_user_id)
+            ->where('user_id', $current_user_id)
             ->get();
 
         return view('home', ['users' => $users]);
