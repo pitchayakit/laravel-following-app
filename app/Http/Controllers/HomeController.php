@@ -24,9 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $following_users = \App\User::find(1)->following_trackers;
+        print_r($following_users);
 
         $users = DB::table('users')
-            ->join('following', 'users.id', '=', 'following.user_id')
+            //->join('following', 'users.id', '=', 'following.user_id')
             ->get();
 
         return view('home', ['users' => $users]);

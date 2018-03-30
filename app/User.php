@@ -27,15 +27,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-}
 
-class UserModel extends Model
-{
-    /**
-     * Get the comments for the blog post.
-     */
-    public function following()
+    public function followingTracker()
     {
-        return $this->hasMany('App\Following');
+        return $this->hasMany('App\FollowingTracker');
     }
 }

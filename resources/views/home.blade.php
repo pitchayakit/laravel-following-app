@@ -18,7 +18,7 @@
                     
                     <ul>
                     @foreach ($users as $user)
-                        <li>{{$user->following_id}}</li>
+                        <li>{{$user->id}}</li>
                     @endforeach
                     </ul>
                 </div>

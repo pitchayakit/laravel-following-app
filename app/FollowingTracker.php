@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Following extends Model
+class FollowingTracker extends Model
 {
-    public function UserModel()
+    public function User()
     {
         return $this->belongsTo('App\User');
     }

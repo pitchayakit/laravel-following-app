@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class FollowingController extends Controller
+class FollowingTrackerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class FollowingController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        //
     }
 
     /**
@@ -28,9 +28,10 @@ class FollowingController extends Controller
         $user_id = Auth::id();
         $following_id = $request->input('following_user');
 
-        DB::table('following')->insert(
+        DB::table('following_trackers')->insert(
             ['user_id' => $user_id, 'following_id' => $following_id]
         );
+
         $users = DB::table('users')->get();
         return view('home', ['users' => $users]);
     }
