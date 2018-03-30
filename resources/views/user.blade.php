@@ -13,10 +13,10 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    {{$user->name}}
+                    <h1>{{$user->name}}</h1>
                     <form action="/following" method="post">
-                    {{ csrf_field() }}
-                    <input type="text" name="following_user" value="{{$user->id}}" hidden>
+                        {{ csrf_field() }}
+                        <input type="text" name="following_user" value="{{$user->id}}" hidden>
                         <button type="submit" class="btn btn-primary">Following</button>
                     </form> 
                 </div>

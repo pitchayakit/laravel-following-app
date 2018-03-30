@@ -12,11 +12,17 @@ class FollowingUserController extends Controller
     {
         $current_user_id = Auth::id();
         $following_id = $request->input('following_user');
-        DB::table('following_users')->insert(
-            ['user_id' => $current_user_id, 'following_id' => $following_id]
-        );
-        $users = DB::table('users')->get();
 
-        return view('home', ['users' => $users]);
+        $follow_exists = DB::table('following_users')
+                        ->where('user_id', '=', $current_user_id)
+                        ->where('following_id', '=', $following_id)
+                        ->first();
+        if ($follow_exists === null) {
+            DB::table('following_users')->insert(
+                ['user_id' => $current_user_id, 'following_id' => $following_id]
+            );
+        }
+        
+        return redirect('home');
     }
 }
