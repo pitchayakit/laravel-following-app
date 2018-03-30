@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $following_users = \App\User::find(1)->followingTracker;
+        $following_users = \App\Model\User::find(1)->followingTracker;
         print_r($following_users);
 
         $users = DB::table('users')
