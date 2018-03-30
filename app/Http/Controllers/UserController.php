@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -15,6 +17,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user', ['user' => User::findOrFail($id)]);
+        $current_user_id = Auth::id();
+
+        $follow_exists = DB::table('following_users')
+                        ->where('user_id', '=', $current_user_id)
+                        ->where('following_id', '=', $id)
+                        ->first();
+
+        if ($follow_exists === null) 
+            return view('user', ['user' => User::findOrFail($id),'following' => 0]);
+        else
+            return view('user', ['user' => User::findOrFail($id),'following' => 1]);
     }
 }
