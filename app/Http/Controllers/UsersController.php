@@ -49,4 +49,34 @@ class UsersController extends Controller
         return view('user', ['user' => User::findOrFail($id),'following' => 0]);
     }
 
+    public function store(Request $request)
+    {
+        $current_user_id = Auth::id();
+        $following_id = $request->input('following_user');
+
+        $follow_exists = DB::table('following_users')
+            ->where('user_id', '=', $current_user_id)
+            ->where('following_id', '=', $following_id)
+            ->first();
+            
+        if ($follow_exists === null) {
+            DB::table('following_users')->insert(
+                ['user_id' => $current_user_id, 'following_id' => $following_id]
+            );
+        }
+        
+        return redirect('home');
+    }
+
+    public function destroy($id)
+    {
+        $current_user_id = Auth::id();
+
+        $user = DB::table('following_users')
+            ->where('user_id', '=', $current_user_id)
+            ->where('following_id', '=', $id)
+            ->delete();
+        return redirect('home');
+    }
+
 }
