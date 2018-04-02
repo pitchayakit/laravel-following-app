@@ -20,4 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user/{id}', 'UserController@show');
 
-Route::post('/follow', 'FollowUserController@create');
+Route::resource('follow', 'FollowUserController');
