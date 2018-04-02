@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel following app training
+                    Laravel follow app training
                 </div>
             </div>
         </div>

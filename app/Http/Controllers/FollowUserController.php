@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class FollowingUserController extends Controller
+class FollowUserController extends Controller
 {
     public function create(Request $request)
     {
