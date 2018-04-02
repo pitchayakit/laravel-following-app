@@ -18,13 +18,13 @@
                         <form action="/users/{{ $user->id }}" method="POST">
                                 {{ csrf_field() }}
                                 @method('DELETE')
-                                <input type="text" name="following_user" value="{{ $user->id }}" hidden>
+                                <input type="number" name="following_user" value="{{ $user->id }}" hidden>
                                 <button type="submit" class="btn btn-primary">Unfollow</button>
                         </form> 
                     @else
                         <form action="/users" method="POST">
                                 {{ csrf_field() }}
-                                <input type="text" name="following_user" value="{{ $user->id }}" hidden>
+                                <input type="number" name="following_user" value="{{ $user->id }}" hidden>
                                 <button type="submit" class="btn btn-primary">Following</button>
                         </form> 
                     @endif

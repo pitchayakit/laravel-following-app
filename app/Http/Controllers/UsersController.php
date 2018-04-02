@@ -18,26 +18,12 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $follow_exists = DB::table('following_users')
-                        ->where('user_id', '=', Auth::id())
-                        ->where('following_id', '=', $id)
-                        ->first();
-
-        if ($follow_exists === null) 
-            return view('user', ['user' => User::findOrFail($id),'following' => 0]);
-        else
-            return view('user', ['user' => User::findOrFail($id),'following' => 1]);
+        return view('user', ['user' => User::findOrFail($id),'following' => $this->check_user_following($id)]);
     }
 
     public function update(Request $request, $id)
-    {       
-        $introduction = $request->input('introduction');
-
-        $follow_exists = DB::table('profiles')
-                        ->where('user_id', '=', Auth::id())
-                        ->first();
-                        
-        if ($follow_exists === null)
+    {                   
+        if ($this->check_user_following($id) === 0)
             DB::table('profiles')->insert(
                 ['user_id' => Auth::id(), 'introduction' => $introduction]
             );
@@ -46,37 +32,41 @@ class UsersController extends Controller
             ->where('id', Auth::id())
             ->update(['introduction' => $introduction]);
 
-        return view('user', ['user' => User::findOrFail($id),'following' => 0]);
+        return view('user', ['user' => User::findOrFail($id),'following' => $this->check_user_following($id)]);
     }
 
     public function store(Request $request)
     {
-        $current_user_id = Auth::id();
         $following_id = $request->input('following_user');
-
-        $follow_exists = DB::table('following_users')
-            ->where('user_id', '=', $current_user_id)
-            ->where('following_id', '=', $following_id)
-            ->first();
             
-        if ($follow_exists === null) {
+        if ($this->check_user_following($following_id) === 0) {
             DB::table('following_users')->insert(
-                ['user_id' => $current_user_id, 'following_id' => $following_id]
+                ['user_id' => Auth::id(), 'following_id' => $following_id]
             );
         }
         
-        return redirect('home');
+        return view('user', ['user' => User::findOrFail($following_id),'following' => $this->check_user_following($following_id)]);
     }
 
     public function destroy($id)
     {
         $current_user_id = Auth::id();
-
         $user = DB::table('following_users')
             ->where('user_id', '=', $current_user_id)
             ->where('following_id', '=', $id)
             ->delete();
-        return redirect('home');
+        return view('user', ['user' => User::findOrFail($id),'following' => $this->check_user_following($id)]);
+    }
+
+    private function check_user_following($id) {
+        $follow_exists = DB::table('following_users')
+                        ->where('user_id', '=', Auth::id())
+                        ->where('following_id', '=', $id)
+                        ->first();
+        if($follow_exists === null)
+            return 0;
+        else
+            return 1;
     }
 
 }
