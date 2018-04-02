@@ -14,21 +14,28 @@
                         </div>
                     @endif
                     <h1>{{ $user->name }}</h1>
-                    <h4>Introduction</h4>
                     @if ($following === 1)
-                        <form action="/follow/{{ $user->id }}" method="post">
+                        <form action="/follow/{{ $user->id }}" method="POST">
                                 {{ csrf_field() }}
                                 @method('DELETE')
                                 <input type="text" name="following_user" value="{{ $user->id }}" hidden>
                                 <button type="submit" class="btn btn-primary">Unfollow</button>
                         </form> 
                     @else
-                        <form action="/follow" method="post">
+                        <form action="/follow" method="POST">
                                 {{ csrf_field() }}
                                 <input type="text" name="following_user" value="{{ $user->id }}" hidden>
                                 <button type="submit" class="btn btn-primary">Following</button>
                         </form> 
                     @endif
+                    <h4>Introduction</h4>
+                    <form action="/user/{{ $user->id }}" method="POST">
+                        {{ csrf_field() }}
+                        @method('PUT')
+                        <input type="text" name="introduction">
+                        <div><button type="submit" class="btn btn-primary">Update</button></div>
+                    </form>
+                    
                 </div>
             </div>
         </div>

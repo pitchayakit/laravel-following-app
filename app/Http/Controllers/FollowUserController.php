@@ -17,6 +17,7 @@ class FollowUserController extends Controller
             ->where('user_id', '=', $current_user_id)
             ->where('following_id', '=', $following_id)
             ->first();
+            
         if ($follow_exists === null) {
             DB::table('following_users')->insert(
                 ['user_id' => $current_user_id, 'following_id' => $following_id]

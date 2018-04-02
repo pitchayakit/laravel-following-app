@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -17,10 +18,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $current_user_id = Auth::id();
-
         $follow_exists = DB::table('following_users')
-                        ->where('user_id', '=', $current_user_id)
+                        ->where('user_id', '=', Auth::id())
                         ->where('following_id', '=', $id)
                         ->first();
 
@@ -29,4 +28,25 @@ class UserController extends Controller
         else
             return view('user', ['user' => User::findOrFail($id),'following' => 1]);
     }
+
+    public function update(Request $request, $id)
+    {       
+        $introduction = $request->input('introduction');
+
+        $follow_exists = DB::table('profiles')
+                        ->where('user_id', '=', Auth::id())
+                        ->first();
+                        
+        if ($follow_exists === null)
+            DB::table('profiles')->insert(
+                ['user_id' => Auth::id(), 'introduction' => $introduction]
+            );
+        else
+            DB::table('profiles')
+            ->where('id', Auth::id())
+            ->update(['introduction' => $introduction]);
+
+        return view('user', ['user' => User::findOrFail($id),'following' => 0]);
+    }
+
 }
