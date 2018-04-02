@@ -29,7 +29,7 @@
                         </form> 
                     @endif
                     <h4>Introduction</h4>
-                    <form action="/user/{{ $user->id }}" method="POST">
+                    <form action="/users/{{ $user->id }}" method="POST">
                         {{ csrf_field() }}
                         @method('PUT')
                         <input type="text" name="introduction">
