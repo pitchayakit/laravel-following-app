@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class FollowUserController extends Controller
 {
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $current_user_id = Auth::id();
         $following_id = $request->input('following_user');
