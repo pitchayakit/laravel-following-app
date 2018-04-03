@@ -14,8 +14,8 @@
                     @endif
                     <h4>Your friends</h4>  
                     <ul>
-                        @foreach ($users as $user)
-                            <li><a href="/users/{{$user->id}}">{{$user->name}}</a></li>
+                        @foreach ($following_users as $user)
+                            <li><a href="/users/{{$user->following->id}}">{{ $user->following->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>

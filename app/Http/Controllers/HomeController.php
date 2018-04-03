@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\FollowingUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -25,13 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $current_user_id = Auth::id();
-        
-        $users = DB::table('following_users')
-            ->join('users', 'users.id', '=', 'following_users.following_id')
-            ->where('user_id', $current_user_id)
-            ->get();
+        $following_users = FollowingUser::all()->where('user_id', '1');
 
-        return view('home', ['users' => $users]);
+        return view('home', ['following_users' => $following_users]);
     }
 }
