@@ -22,7 +22,9 @@ class UsersController extends Controller
     }
 
     public function update(Request $request, $id)
-    {                   
+    {   
+        $introduction = $request->input('introduction');
+
         if ($this->check_user_following($id) === 0)
             DB::table('profiles')->insert(
                 ['user_id' => Auth::id(), 'introduction' => $introduction]
@@ -50,11 +52,11 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
-        $current_user_id = Auth::id();
         $user = DB::table('following_users')
             ->where('user_id', '=', $current_user_id)
-            ->where('following_id', '=', $id)
+            ->where('following_id', '=', Auth::id())
             ->delete();
+            
         return view('user', ['user' => User::findOrFail($id),'following' => $this->check_user_following($id)]);
     }
 
