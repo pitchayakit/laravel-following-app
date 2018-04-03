@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
+use App\Models\Profile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,21 +19,21 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        return view('user', ['user' => User::findOrFail($id),'following' => $this->check_user_following($id)]);
+        return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
     }
 
     public function update(Request $request, $id)
     {   
-        $introduction = $request->input('introduction');
-
-        if ($this->check_user_following($id) === 0)
+        if (Profile::where('user_id', $id)->first() === 0){
             DB::table('profiles')->insert(
-                ['user_id' => Auth::id(), 'introduction' => $introduction]
+                ['user_id' => Auth::id(), 'introduction' => $request->input('introduction')]
             );
-        else
+        }
+        else {
             DB::table('profiles')
-            ->where('id', Auth::id())
+            ->where('user_id', Auth::id())
             ->update(['introduction' => $introduction]);
+        }
 
         return view('user', ['user' => User::findOrFail($id),'following' => $this->check_user_following($id)]);
     }
@@ -65,6 +66,7 @@ class UsersController extends Controller
                         ->where('user_id', '=', Auth::id())
                         ->where('following_id', '=', $id)
                         ->first();
+
         if($follow_exists === null)
             return 0;
         else

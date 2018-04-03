@@ -8,6 +8,6 @@ class FollowingUser extends Model
 {
     public function User()
     {
-        return $this->belongsTo('App\Model\User');
+        return $this->belongsTo('App\Models\User');
     }
 }
