@@ -63,7 +63,6 @@ class UsersController extends Controller
         $following_user->first();
         $following_user->delete();
 
-            
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
     }
 
@@ -78,5 +77,5 @@ class UsersController extends Controller
         else
             return 1;
     }
-
+    
 }

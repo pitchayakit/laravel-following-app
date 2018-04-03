@@ -29,12 +29,16 @@
                         </form> 
                     @endif
                     <h4>Introduction</h4>
-                    <form action="/users/{{ $user->id }}" method="POST">
-                        {{ csrf_field() }}
-                        @method('PUT')
-                    <input type="text" name="introduction" value="@if(!empty($user->profile->introduction)){{ $user->profile->introduction }} @endif">
-                        <div><button type="submit" class="btn btn-primary">Update</button></div>
-                    </form>
+                    @if(Auth::user()->id === $user->id)
+                        <form action="/users/{{ $user->id }}" method="POST">
+                            {{ csrf_field() }}
+                            @method('PUT')
+                            <input type="text" name="introduction" value="@if(!empty($user->profile->introduction)){{ $user->profile->introduction }} @endif">
+                            <div><button type="submit" class="btn btn-primary">Update</button></div>
+                        </form>
+                    @else
+                        @if(!empty($user->profile->introduction)){{ $user->profile->introduction }} @endif
+                    @endif
                     
                 </div>
             </div>
