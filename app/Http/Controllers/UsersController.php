@@ -73,10 +73,6 @@ class UsersController extends Controller
                         ->where('following_id', '=', $id)
                         ->first();
 
-        $following_user = FollowingUser::where('user_id', Auth::id());
-        $following_user->following_id = $id;
-        $following_user->first();
-
         if($follow_exists === null)
             return 0;
         else
