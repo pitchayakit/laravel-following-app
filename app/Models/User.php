@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,6 @@ class User extends Model
     }
     public function profile()
     {
-        return $this->hasOne('App\Model\Profile');
+        return $this->hasOne('App\Profile','user_id');
     }
 }
