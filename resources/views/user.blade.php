@@ -32,7 +32,7 @@
                     <form action="/users/{{ $user->id }}" method="POST">
                         {{ csrf_field() }}
                         @method('PUT')
-                    <input type="text" name="introduction" value="{{ $user->profile->introduction }}">
+                    <input type="text" name="introduction" value="@if(!empty($user->profile->introduction)){{ $user->profile->introduction }} @endif">
                         <div><button type="submit" class="btn btn-primary">Update</button></div>
                     </form>
                     
