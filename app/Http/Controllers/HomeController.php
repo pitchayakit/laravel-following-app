@@ -27,7 +27,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $following_users = FollowingUser::all()->where('user_id', '1');
+        $following_users = FollowingUser::all()->where('user_id', Auth::id());
+
+        return view('home', ['following_users' => $following_users]);
+    }
+
+    public function store(Request $request)
+    {
+        $user = User::find($id);
+
+        $inputs = $request->input();
+        foreach ($inputs as $key => $value){
+            
+        }
+        $following_users = FollowingUser::all()->where('user_id', Auth::id());
 
         return view('home', ['following_users' => $following_users]);
     }
