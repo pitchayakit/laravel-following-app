@@ -17,7 +17,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user= User::find(Auth::user());
+    
+            return $next($request);
+        });
     }
 
     /**
@@ -34,7 +38,7 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::find($id);
+        $this->user = User::find($id);
 
         $inputs = $request->input();
         foreach ($inputs as $key => $value){

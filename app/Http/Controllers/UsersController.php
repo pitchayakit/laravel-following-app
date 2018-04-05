@@ -14,7 +14,11 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user= User::find(Auth::user());
+    
+            return $next($request);
+        });
     }
     /**
      * Show the profile for the given user.
@@ -31,15 +35,15 @@ class UsersController extends Controller
     {   
         $introduction = $request->input('introduction');
 
-        $user = User::find($id);
-        if($user->profile === null) {
+        $this->user = User::find($id);
+        if($this->user->profile === null) {
             $profile = new Profile;
             $profile->introduction = $introduction;
-            $user->profile()->save($profile);
+            $this->user->profile()->save($profile);
         }
         else {
-            $user->profile->introduction = $introduction;
-            $user->profile->save();
+            $this->user->profile->introduction = $introduction;
+            $this->user->profile->save();
         }
         
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
@@ -48,12 +52,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $following_id = $request->input('following_user');
-        $user = User::find(Auth::id());
+        $this->user = User::find(Auth::id());
 
         if ($this->check_user_following($following_id) === 0) {
             $followingUser = new FollowingUser;
             $followingUser->following_id = $following_id;
-            $user->followingUsers()->save($followingUser);
+            $this->user->followingUsers()->save($followingUser);
         }
         
         return view('user', ['user' => User::find($following_id),'following' => $this->check_user_following($following_id)]);
@@ -61,15 +65,15 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find(Auth::id());
-        $user->followingUsers->where('following_id', $id)->first()->delete();
+        $this->user = User::find(Auth::id());
+        $this->user->followingUsers->where('following_id', $id)->first()->delete();
 
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
     }
 
     private function check_user_following($id) {
-        $user = User::find(Auth::id());
-        $follow_exists = $user->followingUsers->where('user_id', Auth::id())->where('following_id', '=', $id)->first();
+        $this->user = User::find(Auth::id());
+        $follow_exists = $this->user->followingUsers->where('user_id', Auth::id())->where('following_id', '=', $id)->first();
 
         if($follow_exists === null)
             return 0;
