@@ -61,10 +61,8 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
-        $following_user = FollowingUser::where('user_id', Auth::id());
-        $following_user->following_id = $id;
-        $following_user->first();
-        $following_user->delete();
+        $user = User::find(Auth::id());
+        $user->followingUsers->where('following_id', $id)->first()->delete();
 
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
     }
