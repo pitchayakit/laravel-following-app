@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -24,11 +19,6 @@ class HomeController extends Controller
         });
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $following_users = FollowingUser::all()->where('user_id', Auth::id());

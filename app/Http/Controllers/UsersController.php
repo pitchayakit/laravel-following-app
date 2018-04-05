@@ -20,12 +20,7 @@ class UsersController extends Controller
             return $next($request);
         });
     }
-    /**
-     * Show the profile for the given user.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+
     public function show($id)
     {
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
