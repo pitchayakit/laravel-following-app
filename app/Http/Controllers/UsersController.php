@@ -48,12 +48,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $following_id = $request->input('following_user');
-            
+        $user = User::find(Auth::id());
+
         if ($this->check_user_following($following_id) === 0) {
-            $following_user = new FollowingUser;
-            $following_user->user_id = Auth::id();
-            $following_user->following_id = $following_id;
-            $following_user->save();
+            $followingUser = new FollowingUser;
+            $followingUser->following_id = $following_id;
+            $user->followingUsers()->save($followingUser);
         }
         
         return view('user', ['user' => User::find($following_id),'following' => $this->check_user_following($following_id)]);
