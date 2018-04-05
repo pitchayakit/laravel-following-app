@@ -31,18 +31,17 @@ class UsersController extends Controller
     {   
         $introduction = $request->input('introduction');
 
-        if (empty(Profile::where('user_id', $id)->first())){
+        $user = User::find($id);
+        if($user->profile === null) {
             $profile = new Profile;
             $profile->introduction = $introduction;
-            $profile->user_id = Auth::id();
-            $profile->save();
+            $user->profile()->save($profile);
         }
         else {
-            $profile = Profile::where('user_id', $id)->first();
-            $profile->introduction = $introduction;
-            $profile->save();
+            $user->profile->introduction = $introduction;
+            $user->profile->save();
         }
-
+        
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
     }
 
