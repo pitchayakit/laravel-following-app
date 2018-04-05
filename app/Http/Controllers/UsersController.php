@@ -68,10 +68,8 @@ class UsersController extends Controller
     }
 
     private function check_user_following($id) {
-        $follow_exists = DB::table('following_users')
-                        ->where('user_id', '=', Auth::id())
-                        ->where('following_id', '=', $id)
-                        ->first();
+        $user = User::find(Auth::id());
+        $follow_exists = $user->followingUsers->where('user_id', Auth::id())->where('following_id', '=', $id)->first();
 
         if($follow_exists === null)
             return 0;
