@@ -15,6 +15,7 @@
                     </ul>
                 </div>
             </div>
+            <hr>
             <div class="card">
                 <div class="card-header">All users</div>
 
