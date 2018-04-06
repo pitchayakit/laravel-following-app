@@ -24,7 +24,8 @@ class UsersController extends Controller
 
     public function index()
     {
-        return view('users');
+        $following_users = FollowingUser::all()->where('user_id', Auth::id());
+        return view('users',['users' => User::all(),'following_users' => $following_users]);
     }
 
     public function show($id)
@@ -59,14 +60,15 @@ class UsersController extends Controller
             $this->user->followingUsers()->save($followingUser);
         }
 
-        return view('users');
+        $following_users = FollowingUser::all()->where('user_id', Auth::id());
+        return redirect('users');
     }
 
     public function destroy($id)
     {
         $this->user->followingUsers->where('following_id', $id)->first()->delete();
 
-        return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
+        return redirect('users');
     }
 
     private function check_user_following($id) {
