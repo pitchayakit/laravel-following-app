@@ -10,8 +10,14 @@ class User extends Model
     {
         return $this->hasMany('App\Models\FollowingUser');
     }
+
     public function profile()
     {
         return $this->hasOne('App\Models\Profile');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Models\Vote');
     }
 }
