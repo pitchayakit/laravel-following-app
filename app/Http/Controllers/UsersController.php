@@ -15,10 +15,16 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->user= User::find(Auth::user());
+            
+            $this->user= User::find(Auth::id());
     
             return $next($request);
         });
+    }
+
+    public function index()
+    {
+        return view('users');
     }
 
     public function show($id)
@@ -30,7 +36,6 @@ class UsersController extends Controller
     {   
         $introduction = $request->input('introduction');
 
-        $this->user = User::find($id);
         if($this->user->profile === null) {
             $profile = new Profile;
             $profile->introduction = $introduction;
@@ -47,28 +52,26 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $following_id = $request->input('following_user');
-        $this->user = User::find(Auth::id());
 
         if ($this->check_user_following($following_id) === 0) {
             $followingUser = new FollowingUser;
             $followingUser->following_id = $following_id;
             $this->user->followingUsers()->save($followingUser);
         }
-        
-        return view('user', ['user' => User::find($following_id),'following' => $this->check_user_following($following_id)]);
+
+        return view('users');
     }
 
     public function destroy($id)
     {
-        $this->user = User::find(Auth::id());
         $this->user->followingUsers->where('following_id', $id)->first()->delete();
 
         return view('user', ['user' => User::find($id),'following' => $this->check_user_following($id)]);
     }
 
     private function check_user_following($id) {
-        $this->user = User::find(Auth::id());
-        $follow_exists = $this->user->followingUsers->where('user_id', Auth::id())->where('following_id', '=', $id)->first();
+        $user = User::find(Auth::id());
+        $follow_exists = $user->followingUsers->where('user_id', Auth::id())->where('following_id', '=', $id)->first();
 
         if($follow_exists === null)
             return 0;
