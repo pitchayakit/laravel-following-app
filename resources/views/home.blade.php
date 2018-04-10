@@ -16,7 +16,7 @@
                         {{ csrf_field() }}
                         @foreach ($following_users as $user)
                             <div>{{ $user->following->name }}</div>
-                            <input type="radio" name="{{ $user->following->id }}" value="1"> 1
+                            <input type="radio" name="{{ $user->following->id }}" value="1" required> 1
                             <input type="radio" name="{{ $user->following->id }}" value="2"> 2
                             <input type="radio" name="{{ $user->following->id }}" value="3"> 3
                             <input type="radio" name="{{ $user->following->id }}" value="4"> 4
