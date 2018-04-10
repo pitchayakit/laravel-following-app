@@ -22,3 +22,4 @@ Route::post('/home', 'HomeController@store');
 Route::resource('users', 'UsersController',['names' => [
     'index' => 'users',
 ]]);
+Route::get('/report', 'reportController@index');
