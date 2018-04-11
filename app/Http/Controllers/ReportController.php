@@ -22,7 +22,7 @@ class reportController extends Controller
     public function index()
     {
         $users = User::all();
-        $file = fopen("test.csv","w");
+        $file = fopen("report.csv","w");
         $users_name_row = array(" ");
         foreach ($users as $user) {
             array_push($users_name_row,$user->name);
