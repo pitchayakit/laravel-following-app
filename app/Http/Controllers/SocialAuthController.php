@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Socialite;
-use App\SocialAccountService;
+use App\Services\SocialAccountService;
 
 class SocialAuthController extends Controller
 {
