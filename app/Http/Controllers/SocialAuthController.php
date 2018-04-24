@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Socialite;
+use App\SocialAccountService;
 
 class SocialAuthController extends Controller
 {
@@ -15,8 +16,12 @@ class SocialAuthController extends Controller
         return Socialite::driver('facebook')->redirect();   
     }   
 
-    public function callback()
+    public function callback(SocialAccountService $service)
     {
-        // when facebook call us a with token   
+        $user = $service->createOrGetUser(Socialite::driver('facebook')->user());
+
+        auth()->login($user);
+
+        return redirect()->to('/home');
     }
 }
