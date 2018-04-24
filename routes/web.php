@@ -23,3 +23,6 @@ Route::resource('users', 'UsersController',['names' => [
     'index' => 'users',
 ]]);
 Route::get('/report', 'reportController@index');
+
+Route::get('/redirect', 'SocialAuthController@redirect');
+Route::get('/callback', 'SocialAuthController@callback');

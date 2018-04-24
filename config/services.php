@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '354333978412788',
+        'client_secret' => 'a949fd18800c082142127bf983513c03',
+        'redirect' => 'https://pitchayakit.com/empag/thanks-survey/public/',
+    ],
+
 ];
