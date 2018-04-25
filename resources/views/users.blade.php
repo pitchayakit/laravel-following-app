@@ -22,7 +22,11 @@
                 <div class="card-body">
                     <ul>
                     @foreach ($users as $user)
-                        <li><a href="users/{{ $user->id }}"><img src="https://graph.facebook.com/v2.10/{{ $user->socialAccount->provider_user_id }}/picture?type=large"><p>{{ $user->name }}</p></a></li>
+                        @if (!empty($user->socialAccount->provider_user_id))
+                            <li><a href="users/{{ $user->id }}"><img src="https://graph.facebook.com/v2.10/{{ $user->socialAccount->provider_user_id }}/picture?type=large"><p>{{ $user->name }}</p></a></li>
+                        @else
+                        <li><a href="users/{{ $user->id }}"><p>{{ $user->name }}</p></a></li>
+                        @endif
                     @endforeach
                     </ul>
                 </div>
