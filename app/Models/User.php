@@ -20,4 +20,9 @@ class User extends Model
     {
         return $this->hasMany('App\Models\Vote');
     }
+
+    public function socialAccount()
+    {
+        return $this->hasOne('App\SocialAccount');
+    }
 }

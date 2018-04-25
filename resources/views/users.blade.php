@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <ul>
                     @foreach ($users as $user)
-                        <li><img src="https://graph.facebook.com/v2.10/10211515394946623/picture?type=large"><a href="/users/{{ $user->id }}">{{ $user->name }}</a></li>
+                        <li><img src="https://graph.facebook.com/v2.10/{{ $user->socialAccount->provider_user_id }}/picture?type=large"><a href="users/{{ $user->id }}">{{ $user->name }}</a></li>
                     @endforeach
                     </ul>
                 </div>
