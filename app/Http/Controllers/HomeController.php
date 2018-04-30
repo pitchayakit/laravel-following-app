@@ -38,6 +38,6 @@ class HomeController extends Controller
         }
         $following_users = FollowingUser::all()->where('user_id', Auth::id());
 
-        return view('home', ['following_users' => $following_users]);
+        return 'You have already voted.';
     }
 }
