@@ -15,7 +15,7 @@
                     <form action="/home" method="POST">
                         {{ csrf_field() }}
                         @foreach ($following_users as $user)
-                            <div>{{ $user->following->name }}</div>
+                            <h3>{{ $user->following->name }}</h3>
                             <img src="https://graph.facebook.com/v2.10/{{ $user->following->socialAccount->provider_user_id }}/picture?type=large">
                             <div>
                                 <input type="radio" name="{{ $user->following->id }}" value="1" required> 1
